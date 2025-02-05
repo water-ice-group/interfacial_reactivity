@@ -4,6 +4,5 @@ This repository contains supplementary data supporting the findings of the paper
 ## Contents
 ---
 - The MACE model used to perform this work.
-- The structural dataset used to train the model.
 - Example input files used to perfom multiple-walker metadynamics.
 - Plotting and analysis files for trajecotry data. 
