@@ -1,0 +1,27 @@
+units       metal
+dimension   3
+boundary    p p p
+atom_style    full
+atom_modify   map yes
+newton        on
+
+read_data     init.lmpdat
+
+pair_style    mace no_domain_decomposition
+pair_coeff    * * /location/of/model/co2-h2o_swa.model-lammps.pt C H O
+velocity      all create 300.0 3928359 rot no dist gaussian
+
+timestep      0.001
+thermo        1
+thermo_style  custom step temp press pe ke enthalpy vol density
+thermo_modify flush yes
+
+fix           f1 all nvt temp 300.0 300.0 0.1
+dump dump1 all dcd 100 out.dcd
+dump_modify dump1 unwrap yes
+
+fix pl1 all plumed plumedfile plumed.dat outfile p.log
+run           1000000
+
+write_data end_frame.lmpdat
+write_restart system.restart
