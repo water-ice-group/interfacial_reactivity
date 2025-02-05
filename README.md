@@ -1,5 +1,5 @@
-# interfacial_reactivity
-A repository containing additional data for the publication 'CO2 Hydration at the Air-Water Interface: A Surface-Mediated ‘In and Out’ Mechanism'.
+# Supplementary data for 'CO2 Hydration at the Air-Water Interface: A Surface-Mediated ‘In and Out’ Mechanism'
+This repository contains supplementary data supporting the findings of the paper: 'CO2 Hydration at the Air-Water Interface: A Surface-Mediated ‘In and Out’ Mechanism'.
 
 This repository contains:
 - The MACE model used to perform this work.
