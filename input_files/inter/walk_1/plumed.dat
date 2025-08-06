@@ -1,0 +1,56 @@
+# RESTART
+UNITS LENGTH=A TIME=fs ENERGY=kcal/mol
+
+
+# Define the groups. 
+# ----------------------------------------------------------
+c: GROUP ATOMS=1
+ox: GROUP ATOMS=2,3,6-543:3
+hy: GROUP ATOMS=4-541:3,5-542:3
+# ----------------------------------------------------------
+
+
+# Define the collective variables
+# ----------------------------------------------------------
+s_co:  COORDINATION GROUPA=c GROUPB=ox R_0=2.0 NN=12 MM=24 D_0=0
+
+s_oh:  COORDINATIONNUMBER SPECIESA=ox SPECIESB=hy SWITCH={RATIONAL R_0=1.25 NN=12 MM=24}
+s_ch: INSPHERE ATOM=c DATA=s_oh RADIUS={RATIONAL R_0=1.5 NN=25 MM=50 D_0=0} SUM
+
+h2o_com: COM ATOMS=ox
+c_dist: DISTANCE ATOMS=h2o_com,c COMPONENTS
+# ----------------------------------------------------------
+
+
+# Define the walls. 
+# ----------------------------------------------------------
+lwall1: LOWER_WALLS ARG=s_co AT=1.9 KAPPA=1000
+lwall2: LOWER_WALLS ARG=s_ch.sum AT=-0.1 KAPPA=1000
+uwall1: UPPER_WALLS ARG=s_co AT=3.1 KAPPA=1000
+uwall2: UPPER_WALLS ARG=s_ch.sum AT=2.4 KAPPA=1000
+# ----------------------------------------------------------
+
+# MetaD Input
+# ----------------------------------------------------------
+mtd: METAD ...
+ARG=s_co,s_ch.sum
+SIGMA=0.05,0.1
+HEIGHT=0.3
+PACE=100
+FILE=HILLS
+BIASFACTOR=11
+TEMP=300
+WALKERS_N=5
+WALKERS_ID=0
+WALKERS_DIR=../hills_output
+WALKERS_RSTRIDE=1000
+...
+# ----------------------------------------------------------
+
+# Print options.
+# ----------------------------------------------------------
+PRINT ARG=s_co.*,s_ch.*,mtd.*,lwall1.*,lwall2.*,uwall1.*,uwall2.* STRIDE=100 FILE=COLVAR
+PRINT ARG=c_dist.z STRIDE=100 FILE=DIST
+# ----------------------------------------------------------
+
+ENDPLUMED

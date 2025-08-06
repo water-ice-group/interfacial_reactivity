@@ -1,0 +1,42 @@
+# RESTART
+UNITS LENGTH=A TIME=ps ENERGY=eV
+
+# Define the groups. 
+# ----------------------------------------------------------
+c: GROUP ATOMS=4
+ox: GROUP ATOMS=3,5,6
+hy: GROUP ATOMS=1,2
+# ----------------------------------------------------------
+
+
+# Define the collective variables
+# ----------------------------------------------------------
+s_co: COORDINATION GROUPA=c GROUPB=ox R_0=2.0 NN=6 MM=12 D_0=0
+s_oh: COORDINATIONNUMBER SPECIESA=ox SPECIESB=hy R_0=1.5 NN=6 MM=12 D_0=0 MORE_THAN={RATIONAL R_0=1.5 NN=6 MM=12 D_0=0}
+# ----------------------------------------------------------
+
+
+# MetaD Input
+# ----------------------------------------------------------
+mtd: METAD ...
+ARG=s_co,s_oh.morethan
+SIGMA=0.1,0.1
+HEIGHT=0.013
+PACE=100
+FILE=HILLS
+BIASFACTOR=35
+TEMP=300
+WALKERS_N=3
+WALKERS_ID=2
+WALKERS_DIR=../hills_output
+WALKERS_RSTRIDE=1000
+...
+# ----------------------------------------------------------
+
+
+# Print options.
+# ----------------------------------------------------------
+PRINT ARG=s_co.*,s_oh.*,mtd.* STRIDE=100 FILE=COLVAR
+# ----------------------------------------------------------
+
+ENDPLUMED
