@@ -4,5 +4,5 @@ This repository contains supplementary data supporting the findings of the paper
 ## Contents
 ---
 * `figures`: scripts for reproducing manuscript figures.
-* `input_files`: Input files for performing well-tempered metadynamics using a combination of lammps (MACE functionality) and PLUMED. 
+* `input_files`: Input files for performing well-tempered metadynamics using a combination of lammps (MACE compabtible) and PLUMED. Input structures as well as submission scripts are also provided. 
 * `model`: MACE data (revPBE-D3) for performing MACE-MD. 
